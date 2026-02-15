@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小狸日語 - 「〜とは限らない」</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap');
+
+  :root { 
+    --primary: #599ddb; --accent: #ff8fab; --card-bg: #e0f2fe; 
+    --grid-line: #cce3f5; --yellow: #fde047; --text: #475569; 
+    --inner-bg: #ffffff; --shadow-color: rgba(0,0,0,0.12);
+  }
+
+  body { margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif; color: var(--text); line-height: 1.5; }
+  .container { max-width: 800px; margin: 0 auto; padding: 60px 20px 20px 20px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+  
+  .article-content { background: #fff; padding: 25px; border-radius: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; box-sizing: border-box; }
+  .article-content h1 { color: var(--primary); margin-top: 0; font-size: 1.5rem; border-bottom: 3px solid var(--yellow); display: inline-block; padding-bottom: 4px; margin-bottom: 15px; }
+  .article-content p { color: #333; margin-bottom: 0.8em; font-size: 1.1rem; }
+  .article-content a { color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary); font-weight: bold; transition: color 0.2s; }
+  
+  /* --- IG 卡片 (300px 固定高度，極限壓縮版) --- */
+  .ig-card { 
+    width: 100%; max-width: 300px; aspect-ratio: 1 / 1; 
+    border-radius: 24px; background-color: var(--card-bg); 
+    background-position: center; background-repeat: repeat;
+    border: 3px solid #fff; box-shadow: 0 5px 15px var(--shadow-color); 
+    display: flex; flex-direction: column; overflow: hidden; position: relative; box-sizing: border-box; margin: 0 auto;
+  }
+  
+  /* 頭部稍微縮小 padding 以爭取空間 */
+  .card-header { padding: 12px 15px 0px 15px; display: flex; align-items: center; flex-shrink: 0; z-index: 2; gap: 8px; }
+  .header-badge { background: var(--primary); color: #fff; font-weight: 900; font-size: 15px; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0; }
+  .header-title { font-size: 13px; font-weight: 900; color: var(--primary); background: #fff; padding: 3px 10px; border-radius: 15px; box-shadow: 0 2px 3px rgba(0,0,0,0.05); white-space: nowrap; }
+  
+  /* 內容區 padding 壓縮 */
+  .card-body { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; padding: 2px 12px 10px 12px; z-index: 2; position: relative; }
+  
+  /* 白色文字框：無紙膠帶，壓縮 padding */
+  .text-bg { 
+    background: var(--inner-bg); 
+    padding: 10px 12px; 
+    border-radius: 16px; 
+    box-shadow: 0 2px 0 rgba(0,0,0,0.05), 0 3px 8px rgba(0,0,0,0.05); 
+    position: relative; 
+    margin-top: 0; 
+    text-align: center; 
+  }
+  
+  /* 字體大小微調 */
+  .main-text { font-size: 20px; font-weight: 900; color: var(--text); line-height: 1.2; margin-bottom: 2px; word-break: break-all; }
+  .sub-text { font-size: 12px; color: #7d899b; font-weight: 700; line-height: 1.4; margin-bottom: 4px; }
+  
+  /* 筆記框：壓縮間距 */
+  .note-box { 
+    margin-top: 4px; 
+    background: #f1f8ff; 
+    border-radius: 8px; 
+    padding: 4px 8px; 
+    line-height: 1.3; 
+    color: #4b5563; 
+    font-weight: 700; 
+    border: 1px dashed #bbdfff; 
+    text-align: left; 
+    font-size: 11px; 
+    margin-bottom: 4px; 
+  }
+  
+  /* 列表項目：極限壓縮 */
+  .vocab-item { 
+    display: flex; 
+    align-items: flex-start; /* 改回 flex-start 以適應多行 */
+    margin-bottom: 4px; 
+    border-bottom: 1px dotted #eef2f6; 
+    padding-bottom: 4px; 
+    text-align: left; 
+  }
+  .vocab-item div { font-size: 13px; line-height: 1.3; }
+  .vocab-num { background: var(--yellow); color: #b45309; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; font-size: 11px; font-weight: 900; margin-right: 6px; flex-shrink: 0; margin-top: 2px; }
+
+  /* ICON 縮小 */
+  .fa-icon { font-size: 24px; display: block; margin: 0 auto 2px auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1)); transition: color 0.5s ease; }
+  .text-primary { color: var(--primary); }
+  .text-accent { color: var(--accent); }
+  
+  /* Ruby 終極修復 (Flexbox) - 確保不跑位 */
+  ruby { font-family: 'Zen Maru Gothic', sans-serif; display: inline-flex; flex-direction: column-reverse; align-items: center; vertical-align: bottom; }
+  rt { font-size: 0.55em; color: var(--primary); font-weight: 600; line-height: 1; margin-bottom: 0px; transform: none !important; }
+  
+  /* 封面與結尾特殊樣式 */
+  .cover-body { align-items: center; text-align: center; padding-bottom: 20px; }
+  .cover-title { font-size: 26px; color: var(--primary); font-weight: 900; margin-bottom: 8px; letter-spacing: 0.02em; text-shadow: 1px 1px 0 #fff; line-height: 1.2; }
+  .tag-pill { display: inline-block; background: var(--accent); color: white; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 14px; box-shadow: 1px 1px 0 rgba(0,0,0,0.1); }
+  .cover-desc { font-size: 14px; color: var(--text); font-weight: 700; line-height: 1.5; background: rgba(255,255,255,0.95); padding: 14px; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); width: 100%; box-sizing: border-box; }
+  
+  /* 浮動按鈕區 */
+  .tools-bar { position: fixed; top: 10px; left: 10px; display: flex; gap: 10px; z-index: 999; }
+  .theme-btn, .dl-btn { background: #fff; padding: 8px 14px; border-radius: 50px; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.2); font-weight: bold; color: #444; border: 1px solid #ddd; font-size: 12px; }
+  .theme-btn:hover, .dl-btn:hover { transform: scale(1.05); background: #f8fafc; }
+  .dl-btn { color: #0ea5e9; border-color: #bae6fd; }
+  
+  @media (max-width: 480px) { .container { padding: 60px 10px 10px 10px; gap: 25px; } .ig-card { max-width: 300px; } }
+</style>
+</head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<div class="tools-bar">
+  <button class="theme-btn" onclick="randomizeTheme()">🎨 切換 12 款和柄主題</button>
+  <button class="dl-btn" onclick="downloadAllCards()">📥 下載全部圖卡 (JPG)</button>
+</div>
+
+<div class="container">
+  <div class="article-content">
+    <span style="font-size:18px;"><strong>
+      <div style="text-align:center;">
+        <h1 style="color:var(--primary);">{{【日語單字】「気」的讀音：唸成「き」還是「け」？}}</h1>
+      </div>
+      <p>大家好，我是小狸老師！</p>
+      <p>日文漢字「気」非常常見，絕大多數時候都唸作<strong style="color:var(--primary);">「き (ki)」</strong>，例如：元気、天気、病気。</p>
+      <p>但是，在某些特定的單字或慣用語中，它會唸成<strong style="color:var(--accent);">「け (ke)」</strong>，通常帶有「跡象、感覺、氣息」的意思。這兩個讀音常讓初學者搞混，今天我們就用 10 張圖卡來一次搞懂！</p>
+
+      <p style="margin-top:40px; border-top: 1px solid #eee; padding-top:20px;">
+      ＿＿＿＿＿＿＿＿＿＿＿＿＿<br>
+      🟦 感謝支持<br>
+      👉 小狸老師作品 👈<br>
+      ❇️ <a href="https://bitl.to/5blV" target="_blank">《小狸日語 新日檢N3聽力攻略》</a><br>
+      ✿ <a href="https://bitl.to/5blW" target="_blank">《小狸日語【觀念文法書】暢銷新版》</a><br>
+      👉 <a href="https://bityl.co/QW41" target="_blank">《小狸日語沉浸式口說訓練課》</a>
+      </p>
+    </strong></span>
+  </div>
+
+  <div class="ig-card" id="card-1">
+    <div class="card-header"><div class="header-badge">01</div><div class="header-title">小狸日語單字帖</div></div>
+    <div class="card-body cover-body">
+       <div style="position:relative; width: 45px; height: 45px; margin: 0 auto 8px auto;">
+         <i class="fa-solid fa-wind fa-icon text-accent" style="position:absolute; top:0; left:5px;"></i>
+       </div>
+       <span class="tag-pill">讀音辨析</span>
+       <div class="cover-title">「気」的讀音<br>き vs. け</div>
+       <div class="cover-desc">什麼時候唸「け」？<br>常見單字總整理</div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-2">
+    <div class="card-header"><div class="header-badge">02</div><div class="header-title">這個字，小狸日語教你用</div></div>
+    <div class="card-body">
+       <div class="text-bg">
+         <i class="fa-solid fa-lightbulb fa-icon text-accent"></i>
+         <div class="main-text">基本原則</div>
+         <div class="sub-text">90% 唸 き (ki)</div>
+         <div class="vocab-item">
+            <div style="font-size:13px;">
+              大多數情況都唸「き」。<br>
+              如：<ruby>元気<rt>げんき</rt></ruby>、<ruby>天気<rt>てんき</rt></ruby>。
+            </div>
+         </div>
+         <div class="vocab-item" style="border-bottom:none;">
+            <div style="font-size:13px;">
+              <strong style="color:var(--accent);">例外唸 け (ke)：</strong><br>
+              表示「氣息、跡象、感覺」。
+            </div>
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-3">
+    <div class="card-header"><div class="header-badge">03</div><div class="header-title">這個字，小狸日語教你用</div></div>
+    <div class="card-body">
+       <div class="text-bg">
+         <i class="fa-solid fa-child-reaching fa-icon text-primary"></i>
+         <div class="main-text"><ruby>元気<rt>げんき</rt></ruby></div>
+         <div class="sub-text">精神 / 健康 (KI)</div>
+         <div class="vocab-item"><span class="vocab-num">1</span><div><strong style="margin-right:4px;">意味</strong><span style="color:#666;">最基礎的單字，唸き。</span></div></div>
+         <div class="vocab-item" style="border-bottom:none;">
+            <span class="vocab-num">2</span>
+            <div><strong style="margin-right:4px;">例文</strong><span style="color:#666; font-weight:700;">お<ruby>元気<rt>げんき</rt></ruby>ですか。<br>(你好嗎？)</span></div>
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-4">
+    <div class="card-header"><div class="header-badge">04</div><div class="header-title">這個字，小狸日語教你用</div></div>
+    <div class="card-body">
+       <div class="text-bg">
+         <i class="fa-solid fa-sun fa-icon text-accent"></i>
+         <div class="main-text"><ruby>天気<rt>てんき</rt></ruby></div>
+         <div class="sub-text">天氣 (KI)</div>
+         <div class="vocab-item"><span class="vocab-num">1</span><div><strong style="margin-right:4px;">意味</strong><span style="color:#666;">自然氣象，唸き。</span></div></div>
+         <div class="vocab-item" style="border-bottom:none;">
+            <span class="vocab-num">2</span>
+            <div><strong style="margin-right:4px;">例文</strong><span style="color:#666; font-weight:700;">いい<ruby>天気<rt>てんき</rt></ruby>ですね。<br>(天氣真好呢。)</span></div>
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-5">
+    <div class="card-header"><div class="header-badge">05</div><div class="header-title">這個字，小狸日語教你用</div></div>
+    <div class="card-body">
+       <div class="text-bg">
+         <i class="fa-solid fa-hospital fa-icon text-primary"></i>
+         <div class="main-text"><ruby>病気<rt>びょうき</rt></ruby></div>
+         <div class="sub-text">生病 (KI)</div>
+         <div class="vocab-item"><span class="vocab-num">1</span><div><strong style="margin-right:4px;">意味</strong><span style="color:#666;">身體不舒服，唸き。</span></div></div>
+         <div class="vocab-item" style="border-bottom:none;">
+            <span class="vocab-num">2</span>
+            <div><strong style="margin-right:4px;">例文</strong><span style="color:#666; font-weight:700;"><ruby>病気<rt>びょうき</rt></ruby>が<ruby>治<rt>なお</rt></ruby>った。<br>(病好了。)</span></div>
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-6">
+    <div class="card-header"><div class="header-badge">06</div><div class="header-title">這個字，小狸日語教你用</div></div>
+    <div class="card-body">
+       <div class="text-bg">
+         <i class="fa-solid fa-eye fa-icon text-accent"></i>
+         <div class="main-text"><ruby>気配<rt>けはい</rt></ruby></div>
+         <div class="sub-text">跡象 / 氣息 (KE)</div>
+         <div class="vocab-item"><span class="vocab-num">1</span><div><strong style="margin-right:4px;">意味</strong><span style="color:#666;">感覺到人或變化。</span></div></div>
+         <div class="vocab-item" style="border-bottom:none;">
+            <span class="vocab-num">2</span>
+            <div><strong style="margin-right:4px;">例文</strong><span style="color:#666; font-weight:700;"><ruby>人<rt>ひと</rt></ruby>の<ruby>気配<rt>けはい</rt></ruby>がする。<br>(感覺有人在。)</span></div>
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-7">
+    <div class="card-header"><div class="header-badge">07</div><div class="header-title">這個字，小狸日語教你用</div></div>
+    <div class="card-body">
+       <div class="text-bg">
+         <i class="fa-solid fa-snowflake fa-icon text-primary"></i>
+         <div class="main-text"><ruby>寒気<rt>さむけ</rt></ruby></div>
+         <div class="sub-text">發冷 / 畏寒 (KE)</div>
+         <div class="vocab-item"><span class="vocab-num">1</span><div><strong style="margin-right:4px;">意味</strong><span style="color:#666;">生病時身體發冷的感覺。</span></div></div>
+         <div class="vocab-item" style="border-bottom:none;">
+            <span class="vocab-num">2</span>
+            <div><strong style="margin-right:4px;">例文</strong><span style="color:#666; font-weight:700;"><ruby>寒気<rt>さむけ</rt></ruby>がします。<br>(我覺得發冷。)</span></div>
+         </div>
+         <div class="note-box">※注意：<ruby>寒気<rt>かんき</rt></ruby> (kanki) 是指外面的冷空氣。</div>
+       </div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-8">
+    <div class="card-header"><div class="header-badge">08</div><div class="header-title">這個字，小狸日語教你用</div></div>
+    <div class="card-body">
+       <div class="text-bg">
+         <i class="fa-solid fa-ghost fa-icon text-accent"></i>
+         <div class="main-text"><ruby>人気<rt>ひとけ</rt></ruby></div>
+         <div class="sub-text">人的氣息 (KE)</div>
+         <div class="vocab-item"><span class="vocab-num">1</span><div><strong style="margin-right:4px;">意味</strong><span style="color:#666;">指有人的感覺，常用於否定。</span></div></div>
+         <div class="vocab-item" style="border-bottom:none;">
+            <span class="vocab-num">2</span>
+            <div><strong style="margin-right:4px;">例文</strong><span style="color:#666; font-weight:700;"><ruby>人気<rt>ひとけ</rt></ruby>のない<ruby>通<rt>とお</rt></ruby>り。<br>(沒有人煙的街道。)</span></div>
+         </div>
+         <div class="note-box">※注意：<ruby>人気<rt>にんき</rt></ruby> (ninki) 是受歡迎。</div>
+       </div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-9">
+    <div class="card-header"><div class="header-badge">09</div><div class="header-title">這個字，小狸日語教你用</div></div>
+    <div class="card-body">
+       <div class="text-bg" style="padding: 10px 12px;">
+         <i class="fa-solid fa-circle-question fa-icon text-primary"></i>
+         <div class="main-text" style="font-size: 18px;">Q. 「感覺到秋天的氣息」</div>
+         <div class="vocab-item" style="align-items: center;"><span class="vocab-num">A</span><span style="font-size: 13px; font-weight: 700;"><ruby>秋<rt>あき</rt></ruby>の<ruby>気配<rt>きはい</rt></ruby> (kihai)</span></div>
+         <div class="vocab-item" style="align-items: center;"><span class="vocab-num">B</span><span style="font-size: 13px; font-weight: 700;"><ruby>秋<rt>あき</rt></ruby>の<ruby>気配<rt>けはい</rt></ruby> (kehai)</span></div>
+         <div class="vocab-item" style="align-items: center; border:none;"><span class="vocab-num">C</span><span style="font-size: 13px; font-weight: 700;"><ruby>秋<rt>あき</rt></ruby>の<ruby>気分<rt>きぶん</rt></ruby> (kibun)</span></div>
+       </div>
+    </div>
+  </div>
+
+  <div class="ig-card" id="card-10">
+    <div class="card-body cover-body">
+       <i class="fa-solid fa-star fa-icon text-accent"></i>
+       <div class="cover-title" style="font-size:26px; margin-bottom:12px;">
+         讀音不同<br>意思大不同！
+       </div>
+       <div class="cover-desc">
+         記得按讚、追蹤<br>
+         <span style="color:var(--primary); font-size: 26px;">小狸日語</span><br>
+         一起搞懂日文！
+       </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function getSvgUrl(svgString, color) {
+    const coloredSvg = svgString.replace(/_COLOR_/g, color);
+    return `url("data:image/svg+xml,${encodeURIComponent(coloredSvg)}")`;
+  }
+
+  // --- SVG 圖紋庫 (透明度 0.05 ~ 0.12) ---
+  const patterns = {
+    asanoha: `<svg width="40" height="69.282" viewBox="0 0 40 69.282" xmlns="http://www.w3.org/2000/svg"><g opacity="0.12" stroke="_COLOR_" stroke-width="1.5" fill="none"><path d="M20 0 L40 11.547 L40 34.641 L20 46.188 L0 34.641 L0 11.547 Z"/><path d="M20 0 L20 46.188 M0 11.547 L40 34.641 M0 34.641 L40 11.547 M20 23.094 L40 11.547 M20 23.094 L40 34.641 M20 23.094 L0 11.547 M20 23.094 L0 34.641"/><path d="M20 46.188 L40 57.735 L40 80.829 L20 92.376 L0 80.829 L0 57.735 Z"/><path d="M20 46.188 L20 92.376 M0 57.735 L40 80.829 M0 80.829 L40 57.735 M20 69.282 L40 57.735 M20 69.282 L40 80.829 M20 69.282 L0 57.735 M20 69.282 L0 80.829"/></g></svg>`,
+    yagasuri: `<svg width="20" height="40" viewBox="0 0 20 40" xmlns="http://www.w3.org/2000/svg"><g opacity="0.06" fill="_COLOR_"><path d="M0 10 L10 0 L20 10 L20 20 L10 10 L0 20 Z"/><path d="M0 30 L10 20 L20 30 L20 40 L10 30 L0 40 Z"/></g></svg>`,
+    samekomon: `<svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><g opacity="0.10"><circle cx="2.5" cy="2.5" r="1.5" fill="_COLOR_"/><circle cx="7.5" cy="7.5" r="1.5" fill="_COLOR_"/></g></svg>`,
+    seigaiha: `<svg width="40" height="20" viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg"><g opacity="0.12" fill="none" stroke="_COLOR_" stroke-width="2"><circle cx="20" cy="20" r="14"/><circle cx="20" cy="20" r="7"/><circle cx="0" cy="20" r="14"/><circle cx="0" cy="20" r="7"/><circle cx="40" cy="20" r="14"/><circle cx="40" cy="20" r="7"/></g></svg>`,
+    shippo: `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><g opacity="0.12" fill="none" stroke="_COLOR_" stroke-width="2"><circle cx="0" cy="0" r="20"/><circle cx="40" cy="0" r="20"/><circle cx="0" cy="40" r="20"/><circle cx="40" cy="40" r="20"/><circle cx="20" cy="20" r="20"/></g></svg>`,
+    kikko: `<svg width="34.64" height="60" viewBox="0 0 34.64 60" xmlns="http://www.w3.org/2000/svg"><g opacity="0.12" fill="none" stroke="_COLOR_" stroke-width="2"><path d="M17.32 0 L34.64 10 L34.64 30 L17.32 40 L0 30 L0 10 Z"/><path d="M17.32 60 L34.64 50 L34.64 30 L17.32 40 L0 30 L0 50 Z"/></g></svg>`,
+    ichimatsu: `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path opacity="0.05" fill="_COLOR_" d="M0 0h10v10H0zm10 10h10v10H10z"/></svg>`,
+    tatewaku: `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path opacity="0.12" fill="none" stroke="_COLOR_" stroke-width="2" d="M10 0 C20 10, 20 10, 10 20 C0 30, 0 30, 10 40 M30 0 C40 10, 40 10, 30 20 C20 30, 20 30, 30 40"/></svg>`,
+    karakusa: `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path opacity="0.12" fill="none" stroke="_COLOR_" stroke-width="2" d="M0 20 Q10 0 20 20 T40 20 M20 20 Q30 40 40 20 T60 20"/></svg>`,
+    kanoko: `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path opacity="0.08" fill="_COLOR_" d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 12a4 4 0 110-8 4 4 0 010 8z"/></svg>`,
+    hishi: `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path opacity="0.12" fill="none" stroke="_COLOR_" stroke-width="1.5" d="M10 0L20 10L10 20L0 10z"/></svg>`,
+    mameshibori: `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle opacity="0.10" cx="10" cy="10" r="4" fill="_COLOR_"/></svg>`
+  };
+
+  const palettes = [
+    { name: '櫻粉 (麻葉紋)', primary: '#e57373', accent: '#599ddb', cardBg: '#ffebee', noteBg: '#fff5f6', noteBorder: '#ffccd2', svg: patterns.asanoha, size: '40px 69.28px' },
+    { name: '桔梗 (箭羽紋)', primary: '#8b5cf6', accent: '#f472b6', cardBg: '#f3e8ff', noteBg: '#faf5ff', noteBorder: '#e9d5ff', svg: patterns.yagasuri, size: '20px 40px' },
+    { name: '青瓷 (鮫小紋)', primary: '#0ea5e9', accent: '#34d399', cardBg: '#e0f2fe', noteBg: '#f0f9ff', noteBorder: '#e0f2fe', svg: patterns.samekomon, size: '15px 15px' },
+    { name: '琉璃 (波紋)', primary: '#3b82f6', accent: '#fbbf24', cardBg: '#eff6ff', noteBg: '#f8fafc', noteBorder: '#dbeafe', svg: patterns.seigaiha, size: '40px 20px' },
+    { name: '蜜柑 (七寶紋)', primary: '#f97316', accent: '#2dd4bf', cardBg: '#fff7ed', noteBg: '#fffbeb', noteBorder: '#ffedd5', svg: patterns.shippo, size: '40px 40px' },
+    { name: '胡桃 (龜甲紋)', primary: '#65a30d', accent: '#f59e0b', cardBg: '#f7fee7', noteBg: '#fcfdf5', noteBorder: '#ecfccb', svg: patterns.kikko, size: '34.64px 60px' },
+    { name: '抹茶 (方格紋)', primary: '#10b981', accent: '#f43f5e', cardBg: '#ecfdf5', noteBg: '#f0fdf4', noteBorder: '#d1fae5', svg: patterns.ichimatsu, size: '30px 30px' },
+    { name: '天水 (蒸汽紋)', primary: '#06b6d4', accent: '#a855f7', cardBg: '#cffafe', noteBg: '#ecfeff', noteBorder: '#cffafe', svg: patterns.tatewaku, size: '40px 40px' },
+    { name: '若竹 (蔓藤紋)', primary: '#14b8a6', accent: '#facc15', cardBg: '#ccfbf1', noteBg: '#f0fdfa', noteBorder: '#ccfbf1', svg: patterns.karakusa, size: '40px 40px' },
+    { name: '撫子 (鹿仔紋)', primary: '#ec4899', accent: '#60a5fa', cardBg: '#fdf2f8', noteBg: '#fdf4f9', noteBorder: '#fce7f3', svg: patterns.kanoko, size: '20px 20px' },
+    { name: '藤紫 (菱形紋)', primary: '#d946ef', accent: '#fb923c', cardBg: '#faf5ff', noteBg: '#fcfaff', noteBorder: '#f3e8ff', svg: patterns.hishi, size: '30px 30px' },
+    { name: '藍白 (豆紋)', primary: '#6366f1', accent: '#ec4899', cardBg: '#eef2ff', noteBg: '#f5f7ff', noteBorder: '#e0e7ff', svg: patterns.mameshibori, size: '20px 20px' }
+  ];
+
+  let currentThemeIndex = 0;
+
+  function randomizeTheme() {
+    const theme = palettes[currentThemeIndex];
+    currentThemeIndex = (currentThemeIndex + 1) % palettes.length;
+    const root = document.documentElement;
+    root.style.setProperty('--primary', theme.primary);
+    root.style.setProperty('--accent', theme.accent);
+    root.style.setProperty('--card-bg', theme.cardBg);
+    
+    document.querySelectorAll('.note-box').forEach(box => {
+      box.style.backgroundColor = theme.noteBg;
+      box.style.borderColor = theme.noteBorder;
+    });
+    
+    document.querySelectorAll('.ig-card').forEach(card => {
+      card.style.backgroundImage = getSvgUrl(theme.svg, theme.primary);
+      card.style.backgroundSize = theme.size;
+    });
+  }
+  
+  // --- 截圖下載功能 (逐張 JPG) ---
+  async function downloadAllCards() {
+    const btn = document.querySelector('.dl-btn');
+    const originalText = btn.innerText;
+    btn.innerText = "⏳ 處理中...";
+    btn.disabled = true;
+
+    const cards = document.querySelectorAll('.ig-card');
+    
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const originalShadow = card.style.boxShadow;
+      const originalTransform = card.style.transform;
+      card.style.boxShadow = 'none';
+      card.style.transform = 'none';
+
+      try {
+        const canvas = await html2canvas(card, {
+          scale: 3, 
+          useCORS: true, 
+          backgroundColor: null,
+          logging: false
+        });
+        
+        const link = document.createElement('a');
+        link.download = `小狸日語_IG卡_${String(i+1).padStart(2, '0')}.jpg`;
+        link.href = canvas.toDataURL('image/jpeg', 0.95);
+        link.click();
+        
+        await new Promise(r => setTimeout(r, 400));
+      } catch (err) {
+        console.error("截圖失敗:", err);
+      } finally {
+        card.style.boxShadow = originalShadow;
+        card.style.transform = originalTransform;
+      }
+    }
+    
+    btn.innerText = originalText;
+    btn.disabled = false;
+    alert("✅ 10張圖卡已全數下載完畢！");
+  }
+
+  window.onload = randomizeTheme;
+</script>
+
+</body>
+</html>
+
+
+
